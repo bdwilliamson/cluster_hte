@@ -1,12 +1,12 @@
-# generalvim
+# cluster_hte
 
 **Author:** [Brian Williamson](https://bdwilliamson.github.io/) 
 
-Slides for a talk on a proposed framework for inference on model-agnostic variable importance.
+Slides for a talk on design considerations for heterogeneity of treatment effects analyses in cluster-randomized trials.
 
 See tagged releases for different versions of the talk.
 
-The slides can be viewed [here](https://bdwilliamson.github.io/generalvim).
+The slides can be viewed [here](https://bdwilliamson.github.io/cluster_hte).
 
 Shield: [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
 
@@ -18,4 +18,3 @@ This work is licensed under a
 [cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
 [cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
 [cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
-# cluster_hte
