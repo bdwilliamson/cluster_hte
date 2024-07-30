@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Design considerations for subgroup analyses in cluster-randomized trials</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Brian D. Williamson, PhD   Kaiser Permanente Washington Health Research Institute " />
+    <script src="cluster_hte_short_files/header-attrs-2.26/header-attrs.js"></script>
+    <link href="cluster_hte_short_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="cluster_hte_short_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link href="cluster_hte_short_files/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="cluster_hte_short_files/tile-view-0.2.6/tile-view.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Design considerations for subgroup analyses in cluster-randomized trials
+]
+.author[
+### Brian D. Williamson, PhD<br> <span style="font-size: 75%;"> Kaiser Permanente Washington Health Research Institute </span>
+]
+.date[
+### 31 July, 2024
+]
+
+---
+
+  
+
+
+&lt;style type="text/css"&gt;
+  .remark-slide-content {
+    font-size: 20px
+    header-h2-font-size: 1.75rem;
+  }
+&lt;/style&gt;
+  
+## Acknowledgments
+  
+  This work was done in collaboration with:
+&lt;img src="img/people1.PNG" width="80%" height="100%" style="display: block; margin: auto;" /&gt;
+
+and was funded by the Patient-Centered Outcomes Research Institute (COVID-2021C2-1368)
+
+---
+  
+## Heterogeneity of treatment effects: what and why
+  
+  **Heterogeneity of treatment effects**:
+  * differential effect of exposure/intervention across subgroups
+* .green[does not necessarily imply a causal or biological interpretation]
+
+--
+  
+  If HTE is present:
+  * .blue1[resources can be prioritized] to maximize benefit and reduce risks .small[[Knol and VanderWeele (2012)]]
+* can determine whether intervention .green[remediates] or .red[exacerbates] health disparities .small[[Petkovic et al. (2020)]]
+
+---
+  
+## Case study: ENSPIRE trial
+  
+  **ENSPIRE**: Engaging Staff to Improve COVID-19 Vaccination Response at Long-term Care Facilities
+
+&amp;zwj;Background:
+  * Rates of COVID-19 disease and death higher in long-term care than general population .small[[Chidambaram (2022)]]
+* Lag in COVID-19 vaccinations among long-term care workers
+* Long-term care (LTC) workers often low-wage, represent diverse social, cultural, racial, and ethnic backgrounds
+
+--
+  
+  &amp;zwj;Design:
+  * Enrolled 40 LTC centers, encompassing approximately 4000 staff members
+* Recruited from 2 US states (Georgia and Washington)
+* Recruited from urban (Atlanta or Seattle) and suburban/rural locations
+
+---
+  
+## Case study: ENSPIRE trial
+  
+  .blue1[Primary outcomes:]
+1. LTC center COVID-19 booster rate (.blue1[cluster-level])
+* chosen due to concerns about data capture
+2. LTC care staff net promoter score (.blue2[individual-level])
+
+.green[Intervention:] booster promotion materials co-designed with LTC staff
+
+&lt;img src="img/enspire_intervention.PNG" width="80%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+  
+## Case study: ENSPIRE trial
+  
+  Co-design: .green[tailoring] messages to specific audiences
+* In ENSPIRE, focused on .blue1[language, cultural, and ethnic affinity] groups
+* Measured race and ethnicity allowing 57 total options 
+
+--
+  
+  HTE analysis natural for interventions, particularly co-designed:
+  * Planned analyses based on state, urban vs suburban/rural, baseline booster uptake
+* Self-reported race and ethnicity both interesting and important, however:
+  * neither sites nor other entity had comprehensive and accurate race and ethnicity data for staff
+* staff survey would only capture a portion of staff members
+* also, didn't know what this would look like with a cluster-level outcome!
+
+---
+
+## Aggregated data: complications
+
+Individual-level effects .red[may not be identifiable] based on aggregate data
+* Often referred to as .red[ecological bias] .small[[Wakefield (2008)]]
+* Exposure-outcome association can be biased: .small[[Greenland &amp; Morgenstern (1989)]]
+  * by aggregated confounders
+  * by aggregated HTE variables
+
+--
+
+Compositional data cause challenges in .red[interpretation]:
+* Arise when aggregating mutually-exclusive binary variables
+* Changing the value of one proportion .green[necessarily changes] at least one other
+
+---
+
+## Simulation setup
+
+Data mimic ENSPIRE trial:
+* Sample `\(K \in \{30, 40, 80\}\)` clusters within two regions
+* Clusters are urban or suburban/rural
+* Randomization constrained to balance on region, urban vs suburban/rural
+* Each center has 100 staff members, who each:
+  * have record of receiving COVID-19 booster vaccine
+  * have self-reported race (recorded as single binary variable)
+* Define cluster-level booster rate `\(\overline{Y}_c\)`
+* Define two aggregations of self-reported race:
+  * center-level proportion
+  * indicator of whether proportion &gt; 0.5
+
+--
+
+Fit both .blue1[individual-level] and .blue2[cluster-level] regression models
+
+Tested for HTE by self-reported race, investigated .green[type I error and power]
+
+
+## Results: power
+
+&lt;img src="img/presentation_power_hte_race.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+.small[Scenarios encode presence of true differences in booster rate or HTE: 
+* 6: difference in booster rate by self-reported race, HTE by self-reported race
+* 8: difference in booster rate by urban and self-reported race, HTE by self-reported race
+* 9: difference in booster rate by urban and self-reported race, HTE by urban and self-reported race]
+
+---
+
+## Results: power
+
+&lt;img src="img/presentation_power_hte_race.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+.small[Models encode individual- (1) vs cluster-level (2), adjustment and interaction variables:
+* 1e, 1f: adjust for self-reported race, allow HTE by self-reported race (1f also by urban)
+* 2g, 2i: adjust for center-level race proportion, allow HTE by self-reported race (2i also by urban)
+* 2h, 2j: adjust for proportion &gt; 0.5, allow HTE by self-reported race (2j also by urban)]
+---
+
+
+## Closing thoughts
+
+.blue1[High power, controlled type I error] to detect HTE in the individual-level analysis
+* where possible, this approach is key for identifying an remedying disparities
+
+.red[Low power] to detect HTE by an aggregated individual-level predictor
+* even in simple setting with only two possible categories!
+* likely .red[exacerbated] in more realistic settings
+* .red[elevated type I error when using proportion] in some settings
+
+However, meaningful estimated differences across groups .blue2[can still be acted upon]
+
+Power calculations should .green[aggregate simulated individual-level data], rather than simulating cluster-level data directly.
+
+For more details, including more realistic simulation settings:
+
+Williamson BD, Coley RY, Hsu C, McCracken CE, Cook AJ (2023). Considerations for subgroup analyses in cluster-randomized trials based on individual-level predictors. _Prevention Science_.
+
+---
+
+## References
+
+* .small[Knol MJ and VanderWeele TJ (2012). Recommendations for presenting analyses of effect modification and interaction. _International Journal of Epidemiology_.]
+* .small[Petkovic et al. (2020). Reporting of health equity considerations in cluster and individually randomized trials. _Trials_.]
+* .small[Chidambaram P (2022). Over 200,000 residents and staff in long-term care facilities have died from COVID-19. _Kaiser Family Foundation_.]
+* .small[Wakefield J (2008). Ecologic studies revisited. _Annual Review of Public Health_.]
+* .small[Greenland S &amp; Morgenstern H (1989). Ecological bias, confounding, and effect modification. _International Journal of Epidemiology_.]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
