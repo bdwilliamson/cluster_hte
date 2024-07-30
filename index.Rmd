@@ -1,7 +1,7 @@
 ---
 title: "Design considerations for subgroup analyses in cluster-randomized trials"
 author: "Brian D. Williamson, PhD<br> <span style= 'font-size: 75%;'> Kaiser Permanente Washington Health Research Institute </span>"
-date: "17 July, 2024 <br> <a href = 'https://bdwilliamson.github.io/#talks' style = 'color: white;'>https://bdwilliamson.github.io/#talks</a>"
+date: "6 August, 2024 <br> <a href = 'https://bdwilliamson.github.io/#talks' style = 'color: white;'>https://bdwilliamson.github.io/#talks</a>"
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
